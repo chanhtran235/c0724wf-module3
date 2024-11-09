@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    // thư viện dùng để biến dịch code jsx => js => trình duyệt mới đọc được
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-<h1 id="id1"></h1>
-<script>
-    let domH1 = document.getElementById("id1");
-    domH1.innerText ="hello"
+<div on></div>
+<script type="text/babel">
+
+    const h1Element = <h1>Hello</h1>
+    const content = document.getElementById('root');
+    const root = ReactDOM.createRoot(content);
+    root.render(h1Element)
+
 </script>
 </body>
 </html>
