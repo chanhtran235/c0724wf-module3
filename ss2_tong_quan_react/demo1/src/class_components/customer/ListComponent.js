@@ -7,6 +7,7 @@ import AddComponent from "./AddComponent";
 class ListComponent extends React.Component {
     constructor(prop) {
         super(prop);
+        // state là một đối tượng
         this.state = {
             customerList: [],
             isShowModal: false,
@@ -14,7 +15,7 @@ class ListComponent extends React.Component {
         }
         this.handleShowModal = this.handleShowModal.bind(this);
     }
-
+    // sau khi render lần đầu tiên thì hàm sẽ chạy để lấy dữ liệu
     componentDidMount() {
         // fetch data từ backend
         console.log("------componentDidMount run--")
@@ -23,7 +24,7 @@ class ListComponent extends React.Component {
             customerList: [...getAllCustomer()]
         }));
     }
-
+    // sau khi thêm mới thành công thì cần kiểm tra state thay đổi => lấy dữ liệu ở dưới lên và render lại
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevState.isAddSuccess !== this.state.isAddSuccess) {
             this.setState((preState) => ({
@@ -32,7 +33,7 @@ class ListComponent extends React.Component {
             }))
         }
     }
-
+   // hàm cập nhật state để component render lại
     handleAddSuccess() {
         this.setState((pre) => ({
             ...pre,

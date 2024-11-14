@@ -9,8 +9,6 @@ class AddComponent extends React.Component{
                 id: "",
                 name:""
             }
-
-
         }
         this.handleSave= this.handleSave.bind(this);
 
