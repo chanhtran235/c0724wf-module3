@@ -1,42 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
-import HeaderComponent from "./components/HeaderComponent";
+import HeaderComponent from "./class_components/HeaderComponent";
 import React from "react";
-import FooterComponent from "./components/FooterComponent";
-import ListComponent from "./components/customer/ListComponent";
-const customerList = [
-    {
-        id: 1,
-        name:"chánh1"
-    },
-    {
-        id: 2,
-        name:"chánh2"
-    },
-    {
-        id: 3,
-        name:"chánh3"
-    }
-]
-const customerList2 = [
-    {
-        id: 1,
-        name:"chánh1"
-    },
-    {
-        id: 2,
-        name:"chánh2"
-    },
-    {
-        id: 3,
-        name:"chánh3"
-    }
-]
+import FooterComponent from "./class_components/FooterComponent";
+import ListComponent from "./class_components/customer/ListComponent";
+
 function App() {
   return (
     <>
       <HeaderComponent/>
-      <ListComponent list ={customerList} size={12}/>
+      <ListComponent/>
       <FooterComponent/>
     </>
   );
