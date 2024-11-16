@@ -17,12 +17,12 @@ class AddComponent extends React.Component{
         console.log("-----save---------")
         // goi api thêm mới
         addNewCustomer(this.state.customer);
-        this.props.handleAddSuccess();
+        this.props.handleReload();
 
     }
     handleOnChange(event){
-        console.log(event.target.name)
-        console.log(event.target.value)
+        // console.log(event.target.name)
+        // console.log(event.target.value)
         this.setState((preState)=>({
             ...preState,
             customer:{

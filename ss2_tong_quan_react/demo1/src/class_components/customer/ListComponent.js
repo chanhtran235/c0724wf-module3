@@ -11,22 +11,29 @@ class ListComponent extends React.Component {
         this.state = {
             customerList: [],
             isShowModal: false,
-            isAddSuccess: false,
+            isReload: false,
+            deleteCustomer: {
+                id: "",
+                name: "",
+            }
+
         }
         this.handleShowModal = this.handleShowModal.bind(this);
+        this.handleReload = this.handleReload.bind(this);
     }
     // sau khi render lần đầu tiên thì hàm sẽ chạy để lấy dữ liệu
     componentDidMount() {
         // fetch data từ backend
         console.log("------componentDidMount run--")
+        const  students = getAllCustomer();
         this.setState((preState) => ({
             ...preState,
-            customerList: [...getAllCustomer()]
+            customerList: [...students]
         }));
     }
     // sau khi thêm mới thành công thì cần kiểm tra state thay đổi => lấy dữ liệu ở dưới lên và render lại
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevState.isAddSuccess !== this.state.isAddSuccess) {
+        if (prevState.isReload !== this.state.isReload) {
             this.setState((preState) => ({
                 ...preState,
                 customerList: [...getAllCustomer()]
@@ -34,20 +41,23 @@ class ListComponent extends React.Component {
         }
     }
    // hàm cập nhật state để component render lại
-    handleAddSuccess() {
+    handleReload() {
         this.setState((pre) => ({
             ...pre,
-            isAddSuccess: true,
+            isReload: !pre.isReload,
         }))
     }
 
     // đóng mở modal
 
-    handleShowModal() {
+    handleShowModal(customer) {
         this.setState((preState) => (
             {
                 ...preState,
-                isShowModal: !preState.isShowModal
+                isShowModal: !preState.isShowModal,
+                deleteCustomer : {
+                    ...customer
+                }
             }
         ))
     }
@@ -55,7 +65,8 @@ class ListComponent extends React.Component {
     render() {
         return (
             <>
-                <AddComponent handleAddSuccess={this.handleAddSuccess.bind(this)}/>
+                {console.log("----------------list render--------------")}
+                <AddComponent handleReload={this.handleReload.bind(this)}/>
 
                 <table className={'table table-dark'}>
                     <thead>
@@ -67,20 +78,22 @@ class ListComponent extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.customerList.map((e, i) => (
-                        <tr key={e.id}>
+                    {this.state.customerList.map((customer, i) => (
+                        <tr key={customer.id}>
                             <td>{i + 1}</td>
-                            <td>{e.id}</td>
-                            <td>{e.name}</td>
+                            <td>{customer.id}</td>
+                            <td>{customer.name}</td>
                             <td>
-                                <button onClick={this.handleShowModal} className={'btn btn-sm btn-danger'}>Delete
+                                <button onClick={()=>{
+                                    this.handleShowModal(customer)
+                                }} className={'btn btn-sm btn-danger'}>Delete
                                 </button>
                             </td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
-                <DeleteComponent handleShowModal={this.handleShowModal} isShowModal={this.state.isShowModal}/>
+                <DeleteComponent handleReload = {this.handleReload} deleteCustomer ={this.state.deleteCustomer} handleShowModal={this.handleShowModal} isShowModal={this.state.isShowModal}/>
             </>
         )
     }

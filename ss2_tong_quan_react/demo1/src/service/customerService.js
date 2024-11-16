@@ -24,3 +24,12 @@ export function addNewCustomer(customer) {
 // kết nối API để thêm mới
     customerList.push(customer);
 }
+
+export function deleteCustomerId(id) {
+    for (let i = 0; i <customerList.length ; i++) {
+       if (customerList[i].id==id){
+           customerList.splice(i,1);
+           break;
+       }
+    }
+}
