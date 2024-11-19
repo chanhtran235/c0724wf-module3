@@ -10,23 +10,31 @@ class ListComponent extends React.Component {
         this.state = {
             studentList: [],
             isShow: false,
-            isAddSuccess: false,
+            isLoadingData: false,
+            deleteStudent: {
+                id: "",
+                name: "",
+            }
         }
-        // this.handleShowModal = this.handleShowModal.bind(this);
+        this.handleShowModal = this.handleShowModal.bind(this);
+        this.handleLoadingData= this.handleLoadingData.bind(this)
     }
 
-    handleShowModal() {
+    handleShowModal(student) {
         this.setState(pre => ({
             ...pre,
-            isShow: !pre.isShow
+            isShow: !pre.isShow,
+            deleteStudent:{
+                ...student
+            }
         }))
     }
 
-    handleIsAddSuccess() {
+    handleLoadingData() {
         this.setState(pre => (
             {
                 ...pre,
-                isAddSuccess: !pre.isAddSuccess
+                isLoadingData: !pre.isLoadingData
             }
         ))
     }
@@ -43,9 +51,10 @@ class ListComponent extends React.Component {
             }
         ))
     }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        if (prevState.isAddSuccess!=this.state.isAddSuccess){
+        if (prevState.isLoadingData!=this.state.isLoadingData){
             this.setState(pre => (
                 {
                     ...pre,
@@ -65,7 +74,7 @@ class ListComponent extends React.Component {
             <>
                 {console.log("----render------------")}
                 <AddComponent handleIsAddSuccess={() => {
-                    this.handleIsAddSuccess()
+                    this.handleLoadingData()
                 }}/>
                 <table className={'table table-dark'}>
                     <thead>
@@ -84,14 +93,14 @@ class ListComponent extends React.Component {
                                 <td>{e.id}</td>
                                 <td>{e.name}</td>
                                 <td>
-                                    <button onClick={this.handleShowModal.bind(this)}>Delete</button>
+                                    <button onClick={()=>{this.handleShowModal(e)}}>Delete</button>
                                 </td>
                             </tr>
                         ))
                     }
                     </tbody>
                 </table>
-                <DeleteComponent isShow={this.state.isShow} handleShowModal={this.handleShowModal.bind(this)}/>
+                <DeleteComponent handleLoadingData ={this.handleLoadingData} deleteStudent = {this.state.deleteStudent} isShow={this.state.isShow} handleShowModal={this.handleShowModal}/>
             </>
         );
     }

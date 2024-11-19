@@ -6,14 +6,12 @@
 </head>
 <body>
 <script>
-    let tong=0;
-    function sum(a,b) {
-        tong += a+b;
-         return tong;
-    }
-
-    console.log(sum(10,20)); // 30
-    console.log(sum(10,20)); // 30
+    let prop1 = "name";
+    let student = {
+        id: 1,
+        [prop1]: "chánh"
+    };
+    console.log(student)
 </script>
 </body>
 </html>
