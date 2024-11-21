@@ -1,9 +1,11 @@
 
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {addNew, getAll} from "../../service/studentService";
 
 function AddComponent({handleIsLoading}) {
     const [student, setStudent] = useState({})
+    const studentIdRef = useRef("");
+    const studentNameRef = useRef("");
 
     const handleOnChange =(event)=>{
         console.log(event.target.name);
@@ -14,6 +16,10 @@ function AddComponent({handleIsLoading}) {
         }))
     }
     const handleAdd =()=>{
+        const student = {
+            id: studentIdRef.current.value,
+            name: studentIdRef.current.value
+        }
         addNew(student);
         console.log(getAll());
         handleIsLoading();
@@ -21,13 +27,14 @@ function AddComponent({handleIsLoading}) {
 
     return (
         <>
+            {console.log("----add-render-----------")}
             <form>
-                <input name={'id'} onChange={(event)=>{handleOnChange(event)}}  placeholder={'ID'}/>
-                <input name={'name'} onChange={(event)=>{handleOnChange(event)}} placeholder={'Name'}/>
+                <input ref={studentIdRef} name={'id'} placeholder={'ID'}/>
+                <input ref={studentNameRef} name={'name'}  placeholder={'Name'}/>
                 <button type={'button'} onClick={handleAdd}>Save</button>
             </form>
         </>
     )
 
 }
-export default AddComponent ;
+export default React.memo(AddComponent) ;

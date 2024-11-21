@@ -1,13 +1,15 @@
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {getAll, searchByName} from "../../service/studentService";
 import AddComponent from "./AddComponent";
+import DeleteComponent from "./DeleteComponent";
 
-const ListComponent =()=>{
+const ListComponent = ()=>{
 
     const [studentList, setStudentList] = useState([]);
+    const [deleteStudent, setDeleteStudent] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [searchValue, setSearchValue] = useState("");
+    const [isShow, setIsShow] = useState(false);
     const searchRef = useRef();
     useEffect(()=>{
         // thực thi sau khi component render
@@ -16,22 +18,11 @@ const ListComponent =()=>{
                 ...getAll()
             ]
         ))
-    },[isLoading]);
-    // useEffect(()=>{
-    //
-    // },[searchValue])
+    },[isLoading,isShow]);
 
-    const handleIsLoading =()=>{
-        setIsLoading(pre=>!pre);
-    }
-    const handleOnChange =(event)=>{
-        let value =event.target.value;
-        console.log(value)
-        setSearchValue(value);
-    }
     const handleSearch =()=>{
         console.log(searchRef.current.value)
-        console.log(searchByName(searchRef.current.value));
+        console.log(searchByName(searchRef.current));
         setStudentList(()=>(
             [
                 ...searchByName(searchRef.current.value)
@@ -39,11 +30,23 @@ const ListComponent =()=>{
         ))
 
     }
+    const handleShowModal =(student)=>{
+        console.log("--------open------------")
+         setDeleteStudent(()=>student);
+         setIsShow(pre=> !pre)
+    }
+
+    const handleCloseModal =useCallback(()=>{
+        console.log("--------close------------")
+        setIsShow(pre=> !pre)
+    },[])
 
     return (
         <>
             {console.log("----render------------")}
-            <AddComponent handleIsLoading ={handleIsLoading}/>
+            <AddComponent handleIsLoading ={useCallback(()=>{
+                setIsLoading(prevState => !prevState)
+            },[])}/>
 
             <form>
                 <input ref={searchRef} placeholder={'enter name'}/>
@@ -61,19 +64,22 @@ const ListComponent =()=>{
                 </thead>
                 <tbody>
                 {
-                  studentList&&studentList.map((e, i) => (
-                        <tr key={e.id}>
+                  studentList&&studentList.map((s, i) => (
+                        <tr key={s.id}>
                             <td>{i + 1}</td>
-                            <td>{e.id}</td>
-                            <td>{e.name}</td>
+                            <td>{s.id}</td>
+                            <td>{s.name}</td>
                             <td>
-                                <button>Delete</button>
+                                <button onClick={
+                                    ()=>{handleShowModal(s)}
+                                }>Delete</button>
                             </td>
                         </tr>
                     ))
                 }
                 </tbody>
             </table>
+            <DeleteComponent isShow={isShow} deleteStudent={deleteStudent} handleCloseModal={handleCloseModal}/>
         </>
     );
 }
