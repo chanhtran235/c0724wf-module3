@@ -7,16 +7,18 @@ function AddComponent({handleIsLoading}) {
     const nameRef = useRef();
 
     const handleSave =()=>{
-
        addNewCustomer({
            id:idRef.current.value,
            name: nameRef.current.value
        });
+        idRef.current.value ="";
+        nameRef.current.value ="";
         handleIsLoading();
     }
 
     return (
         <>
+            {console.log("---------add render ----------------")}
             <h2>Add Customer</h2>
             <form>
                 ID:
@@ -29,4 +31,4 @@ function AddComponent({handleIsLoading}) {
     );
 }
 
-export default AddComponent;
+export default React.memo(AddComponent);

@@ -1,40 +1,42 @@
 
 import React, {useRef, useState} from "react";
 import {addNew, getAll} from "../../service/studentService";
+import useForm from "../../hook/userForm";
+import {useNavigate} from "react-router-dom";
 
-function AddComponent({handleIsLoading}) {
-    const [student, setStudent] = useState({})
-    const studentIdRef = useRef("");
-    const studentNameRef = useRef("");
+function AddComponent() {
+    const navigate = useNavigate()
 
-    const handleOnChange =(event)=>{
-        console.log(event.target.name);
-        console.log(event.target.value);
-        setStudent(prevState => ({
-            ...prevState,
-            [event.target.name]: event.target.value
-        }))
-    }
+    const [formValues, handleOnChange, resetFrom] = useForm({id:"",name:""});
+    // const [student, setStudent] = useState({})
+    //
+    // const handleOnChange =(event)=>{
+    //     console.log(event.target.name);
+    //     console.log(event.target.value);
+    //     setStudent(prevState => ({
+    //         ...prevState,
+    //         [event.target.name]: event.target.value
+    //     }))
+    // }
+
     const handleAdd =()=>{
-        const student = {
-            id: studentIdRef.current.value,
-            name: studentIdRef.current.value
-        }
-        addNew(student);
+        console.log(formValues)
+        addNew(formValues);
+        resetFrom();
         console.log(getAll());
-        handleIsLoading();
+        navigate('/students')
     }
 
     return (
         <>
             {console.log("----add-render-----------")}
             <form>
-                <input ref={studentIdRef} name={'id'} placeholder={'ID'}/>
-                <input ref={studentNameRef} name={'name'}  placeholder={'Name'}/>
+                <input value={formValues.id}  onChange={handleOnChange} name={'id'} placeholder={'ID'}/>
+                <input value={formValues.name} onChange={handleOnChange} name={'name'}  placeholder={'Name'}/>
                 <button type={'button'} onClick={handleAdd}>Save</button>
             </form>
         </>
     )
 
 }
-export default React.memo(AddComponent) ;
+export default AddComponent ;

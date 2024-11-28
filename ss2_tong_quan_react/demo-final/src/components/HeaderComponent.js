@@ -1,15 +1,9 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap/dist/js/bootstrap.min.js"
-import {Link, NavLink} from "react-router-dom"
-
-
-class Header extends React.Component{
-
-
-    render() {
-       return (
-        <nav className="navbar navbar-expand-lg bg-light">
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js'
+import {Link} from "react-router-dom"
+function HeaderComponent() {
+    return (
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">Navbar</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -20,19 +14,16 @@ class Header extends React.Component{
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <NavLink className="nav-link"  to="/home">Home</NavLink>
+                            <Link className="nav-link active" aria-current="page" to="/home">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <NavLink   className={({ isActive }) => `nav-link ${isActive ? 'active-link' : ''}`}  to="/home/about">About</NavLink>
+                            <Link className="nav-link" to="/products">List</Link>
                         </li>
-                        <li className="nav-item">
-                            <NavLink className={({isActive})=>`nav-link ${isActive?'active-link':''}`} to="/students">List</NavLink>
-                        </li>
-                    </ul>
+                      </ul>
                 </div>
             </div>
         </nav>
-       )
-    }
+    );
+
 }
-export default Header ;
+export default HeaderComponent ;

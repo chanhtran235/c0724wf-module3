@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {getAllCustomer, searchByName} from "../../service/customerService";
 import AddComponent from "./AddComponent";
 import DeleteComponent from "./DeleteComponet";
@@ -17,37 +17,38 @@ const ListComponent = () => {
                 ...getAllCustomer()
             ]
         ))
-        return ()=>{
+        return () => {
             // code thưc trước khi component unmount;
         }
     }, [isLoading]);
 
-    const handleIsLoading = ()=>{
+    const handleIsLoading = useCallback(() => {
         setIsLoading((prevState) => !prevState)
-    }
+    },[])
 
-    const handleSearch = ()=>{
-        let searchName =searchNameRef.current.value;
+    const handleSearch = () => {
+        let searchName = searchNameRef.current.value;
         const listSearch = searchByName(searchName);
-        setCustomerList(() =>[
+        setCustomerList(() => [
             ...listSearch
         ])
     }
-    const handleShowModal = (customer)=>{
-        setDeleteCustomer(()=>({
+    const handleShowModal = (customer) => {
+        setDeleteCustomer(() => ({
             ...customer
         }));
+        setIsShowModal(prevState => !prevState);
+    }
+    const handleCloseModal =  useCallback(() => {
+        setIsShowModal(prevState => !prevState);
+    },[]);
 
-        setIsShowModal(prevState => !prevState);
-    }
-    const handleCloseModal =()=>{
-        setIsShowModal(prevState => !prevState);
-    }
+    const array = useMemo(()=>[1,2,3],[]);
 
     return (
         <>
             {console.log("----------------list render--------------")}
-            <AddComponent handleIsLoading ={handleIsLoading} />
+            <AddComponent handleIsLoading={handleIsLoading}/>
             <form>
                 <input ref={searchNameRef} placeholder={'Enter name'}/>
                 <button type={'button'} onClick={handleSearch}>Search</button>
@@ -68,15 +69,17 @@ const ListComponent = () => {
                         <td>{customer.id}</td>
                         <td>{customer.name}</td>
                         <td>
-                            <button onClick={()=>{
+                            <button onClick={() => {
                                 handleShowModal(customer)
-                            }} className={'btn btn-sm btn-danger'}>Delete</button>
+                            }} className={'btn btn-sm btn-danger'}>Delete
+                            </button>
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
-            <DeleteComponent handleIsLoading={handleIsLoading} deleteCustomer ={deleteCustomer} isShowModal={isShowModal} handleCloseModal ={handleCloseModal}/>
+            <DeleteComponent prop1 ={array} handleIsLoading={handleIsLoading} deleteCustomer={deleteCustomer} isShowModal={isShowModal}
+                             handleCloseModal={handleCloseModal}/>
         </>
     );
 }

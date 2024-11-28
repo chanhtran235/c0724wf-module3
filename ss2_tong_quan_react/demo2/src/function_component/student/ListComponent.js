@@ -3,6 +3,7 @@ import React, {useCallback, useEffect, useRef, useState} from "react";
 import {getAll, searchByName} from "../../service/studentService";
 import AddComponent from "./AddComponent";
 import DeleteComponent from "./DeleteComponent";
+import {Link, useNavigate} from "react-router-dom"
 
 const ListComponent = ()=>{
 
@@ -11,6 +12,7 @@ const ListComponent = ()=>{
     const [isLoading, setIsLoading] = useState(false);
     const [isShow, setIsShow] = useState(false);
     const searchRef = useRef();
+    const navigate = useNavigate();
     useEffect(()=>{
         // thực thi sau khi component render
         setStudentList(()=>(
@@ -41,13 +43,14 @@ const ListComponent = ()=>{
         setIsShow(pre=> !pre)
     },[])
 
+    const handleDetail=(id)=> {
+        navigate("/students/detail/"+id)
+    }
+
     return (
         <>
             {console.log("----render------------")}
-            <AddComponent handleIsLoading ={useCallback(()=>{
-                setIsLoading(prevState => !prevState)
-            },[])}/>
-
+            <Link to={'/students/create'}>Add new student</Link>
             <form>
                 <input ref={searchRef} placeholder={'enter name'}/>
                 <button onClick={handleSearch} type={'button'}>Search</button>
@@ -59,6 +62,7 @@ const ListComponent = ()=>{
                     <th>STT</th>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Detail</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -69,6 +73,9 @@ const ListComponent = ()=>{
                             <td>{i + 1}</td>
                             <td>{s.id}</td>
                             <td>{s.name}</td>
+                            <td>
+                                <button onClick={()=>{handleDetail(s.id)}}>Detail</button>
+                            </td>
                             <td>
                                 <button onClick={
                                     ()=>{handleShowModal(s)}

@@ -1,14 +1,11 @@
-import {useState} from "react";
+import { useState } from "react";
 
 function useForm(initialValues) {
     const [values, setValues] = useState(initialValues);
 
-    const handleChange = (event) => {
-        setValues((prev) => (
-            {...prev,
-                [event.target.name]: event.target.value
-            })
-        );
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setValues((prev) => ({ ...prev, [name]: value }));
     };
 
     const resetForm = () => {
