@@ -1,9 +1,10 @@
 
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import {getAll, searchByName} from "../../service/studentService";
-import AddComponent from "./AddComponent";
+import {deleteById, getAll, searchByName} from "../../service/studentService";
 import DeleteComponent from "./DeleteComponent";
 import {Link, useNavigate} from "react-router-dom"
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const ListComponent = ()=>{
 
@@ -11,15 +12,19 @@ const ListComponent = ()=>{
     const [deleteStudent, setDeleteStudent] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [isShow, setIsShow] = useState(false);
+    const [isShowModalReactBootstrap, setIsShowModalReactBootstrap] = useState(false);
     const searchRef = useRef();
     const navigate = useNavigate();
     useEffect(()=>{
         // thực thi sau khi component render
-        setStudentList(()=>(
-            [
-                ...getAll()
-            ]
-        ))
+        setTimeout(()=>{
+            setStudentList(()=>(
+                [
+                    ...getAll()
+                ]
+            ))
+        },1000)
+
     },[isLoading,isShow]);
 
     const handleSearch =()=>{
@@ -46,7 +51,24 @@ const ListComponent = ()=>{
     const handleDetail=(id)=> {
         navigate("/students/detail/"+id)
     }
+     const handleShowModalReactBootstrap =(student)=>{
+         setDeleteStudent(()=>({
+             ...student
+         }));
+        setIsShowModalReactBootstrap(pre =>!pre);
 
+     }
+     const handleCloseModalReactBootstrap =()=>{
+        setIsShowModalReactBootstrap(pre =>!pre);
+    }
+    const handleDeleteReactBootstrap =()=>{
+        console.log("-------delete--------------------")
+        console.log(deleteStudent)
+        deleteById(deleteStudent.id);
+        console.log(getAll())
+        setIsShowModalReactBootstrap(pre =>!pre);
+        setIsLoading(pre=>!pre)
+    }
     return (
         <>
             {console.log("----render------------")}
@@ -64,11 +86,12 @@ const ListComponent = ()=>{
                     <th>Name</th>
                     <th>Detail</th>
                     <th>Delete</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 {
-                  studentList&&studentList.map((s, i) => (
+                    (studentList.length==0)?<tr><td>isLoadingin</td></tr>:studentList.map((s, i) => (
                         <tr key={s.id}>
                             <td>{i + 1}</td>
                             <td>{s.id}</td>
@@ -81,13 +104,38 @@ const ListComponent = ()=>{
                                     ()=>{handleShowModal(s)}
                                 }>Delete</button>
                             </td>
+                            <td>
+                                <Button variant="primary" onClick={()=>{
+                                    handleShowModalReactBootstrap(s)
+                                }}>
+                                    Delete
+                                </Button>
+                            </td>
                         </tr>
                     ))
                 }
                 </tbody>
             </table>
             <DeleteComponent isShow={isShow} deleteStudent={deleteStudent} handleCloseModal={handleCloseModal}/>
-        </>
+
+            <Modal show={isShowModalReactBootstrap} onHide={handleCloseModalReactBootstrap}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có muốn xoá {deleteStudent.name} không?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModalReactBootstrap}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleDeleteReactBootstrap}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            </>
     );
 }
 export default ListComponent ;

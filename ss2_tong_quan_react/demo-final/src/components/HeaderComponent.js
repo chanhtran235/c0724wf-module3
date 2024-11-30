@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
-import {Link} from "react-router-dom"
+import {Link, NavLink} from "react-router-dom"
 function HeaderComponent() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,7 +17,7 @@ function HeaderComponent() {
                             <Link className="nav-link active" aria-current="page" to="/home">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/products">List</Link>
+                            <NavLink   className={({isActive})=>`nav-link ${isActive?'active-link':''}`} to="/products">List</NavLink>
                         </li>
                       </ul>
                 </div>
