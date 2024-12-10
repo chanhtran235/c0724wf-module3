@@ -8,8 +8,13 @@ import * as Yup from "yup";
 function AddComponent() {
     const navigate = useNavigate()
     const [student, setStudent] = useState({id: "", name: "",gender : "Female",subject: [], classId:"C04"})
-    const handleSubmit = (value) => {
+    const handleSubmit =  (value) => {
         console.log(value)
+         addNew(value).then(()=>{
+             console.log("-------thêm mới thành công-----------")
+         });
+
+        navigate('/students')
     }
     const handleValidate = Yup.object({
         id: Yup.string().required("yêu cầu nhập id"),

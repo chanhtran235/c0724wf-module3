@@ -19,9 +19,9 @@ function AddComponent() {
     //     }))
     // }
 
-    const handleAdd =()=>{
+    const handleAdd =async ()=>{
         console.log(formValues)
-        addNew(formValues);
+        await addNew(formValues);
         resetFrom();
         console.log(getAll());
         navigate('/students')

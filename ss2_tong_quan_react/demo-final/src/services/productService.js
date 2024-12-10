@@ -1,4 +1,6 @@
 
+import axios from "axios";
+import {setLocale} from "yup";
 
 // các hàm dùng dùng để call dữ liệu từ back end => API
 const productList = [
@@ -15,20 +17,50 @@ const productList = [
         name : "Iphone"
     }
 ]
-export function getAllProduct() {
+export async  function getAllProduct() {
   // gội API
-    return productList;
-}
-export function addNewProduct(product) {
-    productList.push(product);
+    try {
+        const  response = await axios.get("http://localhost:8080/products");
+        console.log(response);
+        return response.data;
+
+    }catch (e) {
+        console.log("lỗi "+e);
+        return [];
+    }
 }
 
-export function getProductById(id) {
+
+
+
+export async function addNewProduct(product) {
+
+    try {
+        const  response = await axios.post("http://localhost:8080/products",product);
+        console.log("---------service- thêm mới-------------")
+    }catch (e) {
+        console.log("lỗi "+e);
+    }
+
+}
+
+export async function getProductById(id) {
+    try {
+        const  response = await axios.get("http://localhost:8080/products/"+id);
+        console.log(response);
+        return response.data;
+
+    }catch (e) {
+        console.log("lỗi "+e);
+        return null;
+    }
+}
+export function deleteProductById(id) {
     for (let i = 0; i <productList.length ; i++) {
         if (productList[i].id ==id){
-            return productList[i];
+           productList.splice(i,1);
+           break;
         }
     }
-    return null;
 }
 // viét function xoá

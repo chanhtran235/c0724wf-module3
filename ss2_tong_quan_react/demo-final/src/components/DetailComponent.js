@@ -11,9 +11,11 @@ function DetailComponent() {
 
     useEffect(()=>{
         console.log(" -         useEffect detail------------")
-        setProduct(()=>({
-            ... getProductById(id)
-        }));
+        const fetData = async  ()=>{
+            let p = await getProductById(id)
+            setProduct(p)
+        }
+        fetData();
     },[])
     return (
         <>

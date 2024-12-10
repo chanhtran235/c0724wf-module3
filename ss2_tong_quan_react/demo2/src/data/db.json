@@ -1,0 +1,49 @@
+{
+  "students": [
+    {
+      "id": 2,
+      "name": "chánh222222222"
+    },
+    {
+      "name": "chánh3",
+      "id": 3
+    },
+    {
+      "id": "155",
+      "name": "trần văn chánh",
+      "gender": "Female",
+      "subject": [
+        "Java"
+      ],
+      "classId": "C04"
+    },
+    {
+      "id": "111",
+      "name": "admin",
+      "gender": "Female",
+      "subject": [
+        "Java"
+      ],
+      "classId": "C04"
+    },
+    {
+      "id": "52",
+      "name": "admin",
+      "gender": "Female",
+      "subject": [
+        "Java"
+      ],
+      "classId": "C04"
+    },
+    {
+      "id": "411",
+      "name": "chanh",
+      "gender": "Female",
+      "subject": [
+        "Java",
+        "JS"
+      ],
+      "classId": "C04"
+    }
+  ]
+}

@@ -1,4 +1,3 @@
-
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {deleteById, getAll, searchByName} from "../../service/studentService";
 import DeleteComponent from "./DeleteComponent";
@@ -6,7 +5,7 @@ import {Link, useNavigate} from "react-router-dom"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const ListComponent = ()=>{
+const ListComponent = () => {
 
     const [studentList, setStudentList] = useState([]);
     const [deleteStudent, setDeleteStudent] = useState({});
@@ -15,59 +14,60 @@ const ListComponent = ()=>{
     const [isShowModalReactBootstrap, setIsShowModalReactBootstrap] = useState(false);
     const searchRef = useRef();
     const navigate = useNavigate();
-    useEffect(()=>{
+    useEffect(() => {
         // thực thi sau khi component render
-        setTimeout(()=>{
-            setStudentList(()=>(
-                [
-                    ...getAll()
-                ]
-            ))
-        },1000)
+        const  fetchData =  ()=>{
+           getAll().then(data =>{
+               console.log(data)
+               setStudentList(data)
+           });
 
-    },[isLoading,isShow]);
+        }
+        fetchData();
 
-    const handleSearch =()=>{
+    }, [isLoading, isShow]);
+
+    const handleSearch = () => {
         console.log(searchRef.current.value)
         console.log(searchByName(searchRef.current));
-        setStudentList(()=>(
+        setStudentList(() => (
             [
                 ...searchByName(searchRef.current.value)
             ]
         ))
 
     }
-    const handleShowModal =(student)=>{
+    const handleShowModal = (student) => {
         console.log("--------open------------")
-         setDeleteStudent(()=>student);
-         setIsShow(pre=> !pre)
+        setDeleteStudent(() => student);
+        setIsShow(pre => !pre)
     }
 
-    const handleCloseModal =useCallback(()=>{
+    const handleCloseModal = useCallback(() => {
         console.log("--------close------------")
-        setIsShow(pre=> !pre)
-    },[])
+        setIsShow(pre => !pre)
+    }, [])
 
-    const handleDetail=(id)=> {
-        navigate("/students/detail/"+id)
+    const handleDetail = (id) => {
+        navigate("/students/detail/" + id)
     }
-     const handleShowModalReactBootstrap =(student)=>{
-         setDeleteStudent(()=>({
-             ...student
-         }));
-        setIsShowModalReactBootstrap(pre =>!pre);
+    const handleShowModalReactBootstrap = (student) => {
+        setDeleteStudent(() => ({
+            ...student
+        }));
+        setIsShowModalReactBootstrap(pre => !pre);
 
-     }
-     const handleCloseModalReactBootstrap =()=>{
-        setIsShowModalReactBootstrap(pre =>!pre);
     }
-    const handleDeleteReactBootstrap =()=>{
+    const handleCloseModalReactBootstrap = () => {
+        setIsShowModalReactBootstrap(pre => !pre);
+    }
+    const handleDeleteReactBootstrap = () => {
         console.log("-------delete--------------------")
         console.log(deleteStudent)
         deleteById(deleteStudent.id);
         console.log(getAll())
-        setIsShowModalReactBootstrap(pre =>!pre);
-        setIsLoading(pre=>!pre)
+        setIsShowModalReactBootstrap(pre => !pre);
+        setIsLoading(pre => !pre)
     }
     return (
         <>
@@ -91,21 +91,29 @@ const ListComponent = ()=>{
                 </thead>
                 <tbody>
                 {
-                    (studentList.length==0)?<tr><td>isLoadingin</td></tr>:studentList.map((s, i) => (
+                    (studentList.length == 0) ? <tr>
+                        <td>isLoadingin</td>
+                    </tr> : studentList.map((s, i) => (
                         <tr key={s.id}>
                             <td>{i + 1}</td>
                             <td>{s.id}</td>
                             <td>{s.name}</td>
                             <td>
-                                <button onClick={()=>{handleDetail(s.id)}}>Detail</button>
+                                <button onClick={() => {
+                                    handleDetail(s.id)
+                                }}>Detail
+                                </button>
                             </td>
                             <td>
                                 <button onClick={
-                                    ()=>{handleShowModal(s)}
-                                }>Delete</button>
+                                    () => {
+                                        handleShowModal(s)
+                                    }
+                                }>Delete
+                                </button>
                             </td>
                             <td>
-                                <Button variant="primary" onClick={()=>{
+                                <Button variant="primary" onClick={() => {
                                     handleShowModalReactBootstrap(s)
                                 }}>
                                     Delete
@@ -135,7 +143,7 @@ const ListComponent = ()=>{
                 </Modal.Footer>
             </Modal>
 
-            </>
+        </>
     );
 }
-export default ListComponent ;
+export default ListComponent;

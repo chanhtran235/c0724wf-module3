@@ -1,4 +1,4 @@
-
+import axios from "axios";
 const studentList = [
     {
         id: 1,
@@ -14,25 +14,39 @@ const studentList = [
     }
 ]
 
-export function getAll() {
-
-    // kết nối API (dữ liệu back-end)
-    return studentList
+export  async function getAll() {
+    try {
+        const response = await axios.get("http://localhost:8080/students");
+        console.log("--------call api----------------");
+        console.log(response.data);
+        return response.data; // Trả về dữ liệu từ API
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return []; // Trả về mảng rỗng khi lỗi
+    }
+    // return  reponse;
 }
 
 export function searchByName(name) {
  return studentList.filter(s=>s.name.includes(name));
 }
-export function addNew(student) {
+export async function addNew(student) {
+    try {
+        const response = await axios.post("http://localhost:8080/students",student);
+        console.log("--------call api thêm mới----------------");
+        console.log(response.data);
+    } catch (e) {
+        console.error("add is error", e);
+    }
     // gọi API để thêm mới
-    studentList.push(student);
 }
 
-export function deleteById(id) {
-    for (let i = 0; i <studentList.length ; i++) {
-        if (studentList[i].id==id){
-            studentList.splice(i,1);
-            break;
-        }
+export async function deleteById(id) {
+    try {
+        const response = await axios.delete("http://localhost:80809/students");
+        console.log("--------call api----------------");
+        console.log(response.data);
+    } catch (e) {
+        console.error("add is error", e);
     }
 }

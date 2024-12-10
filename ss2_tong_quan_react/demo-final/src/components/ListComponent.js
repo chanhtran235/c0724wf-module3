@@ -1,31 +1,42 @@
 import React, {useEffect, useState} from "react";
-import {getAllProduct} from "../services/productService";
+import {deleteProductById, getAllProduct} from "../services/productService";
 import {Link} from "react-router-dom"
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 function ListComponent() {
     const [productList , setProductList] = useState([]);
     const [show,setShow] = useState(false);
-    useEffect(()=>{
+    const [isLoading,setIsLoading] = useState(false);
+    const [deleteProduct,setDeleteProduct] = useState({id: "", name: ""});
+    useEffect( ()=>{
         console.log("------- userEffec run ----------------------")
-        const listProduct = getAllProduct();
-        setProductList(()=>(
-            [
-                ...listProduct
-            ]
-        ))
+        const fetchData = async ()=>{
+            const list =  await getAllProduct();
+            setProductList(list);
+        }
+        // const fetchData =  ()=>{
+        //    getAllProduct().then((list)=>{
+        //        setProductList(list);
+        //     });
+        // }
+        fetchData();
 
-    },[]);
+    },[isLoading]);
 
     const handleClose =()=>{
         setShow((pre) => !pre);
     }
-    const handleShow =()=>{
+    const handleShow =(product)=>{
            setShow((pre) => !pre);
+           setDeleteProduct(product);
+
 
     }
     const handleDelete =()=>{
-
+        deleteProductById(deleteProduct.id);
+        console.log(getAllProduct());
+        setIsLoading((pre) =>!pre);
+        handleClose();
     }
     return (
         <>
@@ -52,7 +63,9 @@ function ListComponent() {
                             <Link to={'/products/detail/'+p.id} className={'btn btn-secondary btn-sm'}>Detail</Link>
                         </td>
                         <td>
-                            <Button variant="primary" onClick={handleShow}>
+                            <Button className={'btn-sm btn-danger'} variant="danger" onClick={()=>{
+                                handleShow(p);
+                            }}>
                                 Delete
                             </Button>
                         </td>
@@ -65,13 +78,13 @@ function ListComponent() {
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+                <Modal.Body>Bạn có muốn xoá {deleteProduct.name}???</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleDelete}>
-                        Save Changes
+                        Delete
                     </Button>
                 </Modal.Footer>
             </Modal>
