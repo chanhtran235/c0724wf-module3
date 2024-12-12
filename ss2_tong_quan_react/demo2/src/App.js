@@ -9,10 +9,12 @@ import HomeComponent from "./function_component/HomeComponent";
 import AboutComponent from "./function_component/AboutComponent";
 import AddComponent from "./function_component/student/AddComponent";
 import DetailComponent from "./function_component/student/DetailComponent";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
     return (
         <>
+           <ToastContainer/>
             <Header/>
             <Routes>
                 <Route path={'/students'} element={<ListComponent/>}/>
@@ -22,6 +24,7 @@ function App() {
                     <Route path={"about"} element={<AboutComponent/>}/>
                 </Route>
             </Routes>
+
             <Footer/>
         </>
 

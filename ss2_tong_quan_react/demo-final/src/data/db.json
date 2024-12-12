@@ -1,51 +1,38 @@
 {
   "products": [
     {
-      "id": 1,
-      "name": "sam sung",
-      "numberOfSim": 1
-    },
-    {
-      "name": "balack berry",
-      "numberOfSim": 1,
-      "id": 2
-    },
-    {
-      "name": "Tran Van",
-      "manufacture": "Nokia",
+      "name": "Iphone",
+      "manufacture": {
+        "id": 2,
+        "name": "Nokia"
+      },
       "sim": "1",
       "feature": [
         "Bluetooth"
       ],
-      "id": 3
-    },
-    {
-      "name": "Admin",
-      "manufacture": "Nokia",
-      "sim": "1",
-      "feature": [
-        "Bluetooth"
-      ],
-      "id": 4
-    },
-    {
-      "name": "Admin11111",
-      "manufacture": "Sam Sung",
-      "sim": "1",
-      "feature": [
-        "Bluetooth"
-      ],
-      "id": 5
+      "id": 1
     }
   ],
-  "customers": [
+  "manufactures": [
     {
       "id": 1,
-      "name": "Trần Văn Chánh"
+      "name": "Sam sung"
     },
     {
-      "id": 1,
-      "name": "Hoàng Việt"
+      "id": 2,
+      "name": "Nokia"
+    },
+    {
+      "id": 3,
+      "name": "Iphone"
+    },
+    {
+      "id": 4,
+      "name": "Bphone"
+    },
+    {
+      "id": 5,
+      "name": "Black Berry"
     }
   ]
 }

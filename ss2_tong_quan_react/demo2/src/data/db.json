@@ -1,49 +1,90 @@
 {
   "students": [
     {
-      "id": 2,
-      "name": "chánh222222222"
-    },
-    {
-      "name": "chánh3",
-      "id": 3
-    },
-    {
-      "id": "155",
+      "id": 1,
       "name": "trần văn chánh",
       "gender": "Female",
       "subject": [
         "Java"
       ],
-      "classId": "C04"
+      "class": {
+        "id": 2,
+        "name": "C08"
+      }
     },
     {
-      "id": "111",
+      "id": 2,
       "name": "admin",
       "gender": "Female",
       "subject": [
         "Java"
       ],
-      "classId": "C04"
+      "class": {
+        "id": 1,
+        "name": "C07"
+      }
     },
     {
-      "id": "52",
+      "id": 3,
       "name": "admin",
       "gender": "Female",
       "subject": [
-        "Java"
+        "Java",
+        "JS",
+        "PHP"
       ],
-      "classId": "C04"
+      "class": {
+        "id": 2,
+        "name": "C08"
+      }
     },
     {
-      "id": "411",
-      "name": "chanh",
+      "id": 4,
+      "name": "Nguyễn Văn E",
+      "gender": "Female",
+      "subject": [
+        "JS",
+        "Java"
+      ],
+      "class": {
+        "id": 1,
+        "name": "C07"
+      }
+    },
+    {
+      "id": 5,
+      "name": "chanh111",
       "gender": "Female",
       "subject": [
         "Java",
         "JS"
       ],
-      "classId": "C04"
+      "class": {
+        "id": 2,
+        "name": "C08"
+      }
+    },
+    {
+      "id": 6,
+      "name": "admin",
+      "gender": "Female",
+      "subject": [
+        "Java"
+      ],
+      "class": {
+        "id": 2,
+        "name": "C08"
+      }
+    }
+  ],
+  "classes": [
+    {
+      "id": 1,
+      "name": "C07"
+    },
+    {
+      "id": 2,
+      "name": "C08"
     }
   ]
 }

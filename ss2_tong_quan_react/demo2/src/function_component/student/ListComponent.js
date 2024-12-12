@@ -4,6 +4,7 @@ import DeleteComponent from "./DeleteComponent";
 import {Link, useNavigate} from "react-router-dom"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import {getAllClass} from "../../service/classService";
 
 const ListComponent = () => {
 
@@ -28,13 +29,11 @@ const ListComponent = () => {
     }, [isLoading, isShow]);
 
     const handleSearch = () => {
-        console.log(searchRef.current.value)
-        console.log(searchByName(searchRef.current));
-        setStudentList(() => (
-            [
-                ...searchByName(searchRef.current.value)
-            ]
-        ))
+        searchByName(searchRef.current.value).then((data)=>{
+            console.log("-----------search------------")
+            console.log(data)
+            setStudentList(data);
+        })
 
     }
     const handleShowModal = (student) => {
@@ -71,7 +70,7 @@ const ListComponent = () => {
     }
     return (
         <>
-            {console.log("----render------------")}
+            {/*{console.log("----render------------")}*/}
             <Link to={'/students/create'}>Add new student</Link>
             <form>
                 <input ref={searchRef} placeholder={'enter name'}/>
@@ -84,6 +83,9 @@ const ListComponent = () => {
                     <th>STT</th>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Gender</th>
+                    <th>Subject</th>
+                    <th>Class</th>
                     <th>Detail</th>
                     <th>Delete</th>
                     <th>Delete</th>
@@ -98,6 +100,9 @@ const ListComponent = () => {
                             <td>{i + 1}</td>
                             <td>{s.id}</td>
                             <td>{s.name}</td>
+                            <td>{s.gender}</td>
+                            <td>{s.subject}</td>
+                            <td>{s.class.name}</td>
                             <td>
                                 <button onClick={() => {
                                     handleDetail(s.id)
@@ -113,11 +118,11 @@ const ListComponent = () => {
                                 </button>
                             </td>
                             <td>
-                                <Button variant="primary" onClick={() => {
+                                <button className="btn btn-danger btn-sm" onClick={() => {
                                     handleShowModalReactBootstrap(s)
                                 }}>
                                     Delete
-                                </Button>
+                                </button>
                             </td>
                         </tr>
                     ))
@@ -137,8 +142,8 @@ const ListComponent = () => {
                     <Button variant="secondary" onClick={handleCloseModalReactBootstrap}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleDeleteReactBootstrap}>
-                        Save Changes
+                    <Button variant="danger" onClick={handleDeleteReactBootstrap}>
+                        Delete
                     </Button>
                 </Modal.Footer>
             </Modal>

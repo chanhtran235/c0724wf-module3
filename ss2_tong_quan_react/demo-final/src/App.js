@@ -7,10 +7,12 @@ import {Routes,Route} from "react-router-dom"
 import HomeComponent from "./components/HomeComponent";
 import AddComponent from "./components/AddComponent";
 import DetailComponent from "./components/DetailComponent"
+import { ToastContainer} from "react-toastify"
 
 function App() {
     return (
         <>
+            <ToastContainer/>
           <HeaderComponent/>
           <Routes>
               <Route path={'/home'} element={<HomeComponent/>}></Route>
