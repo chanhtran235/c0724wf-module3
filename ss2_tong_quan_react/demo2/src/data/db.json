@@ -86,5 +86,20 @@
       "id": 2,
       "name": "C08"
     }
+  ],
+  "accounts" : [
+    {
+      "id": 1,
+      "username": "chanhtv",
+      "password" : "123",
+      "role": "ADMIN"
+    },
+    {
+      "id": 2,
+      "username": "haitt",
+      "password" : "123",
+      "role": "USER"
+    }
+
   ]
 }

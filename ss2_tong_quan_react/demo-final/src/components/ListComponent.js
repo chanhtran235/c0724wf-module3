@@ -3,7 +3,9 @@ import {deleteProductById, getAllProduct, searchProductByName} from "../services
 import {Link} from "react-router-dom"
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import {useSelector} from "react-redux";
 function ListComponent() {
+    const account = useSelector(state =>state.user.account );
     const [productList , setProductList] = useState([]);
     const [show,setShow] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
@@ -76,11 +78,12 @@ function ListComponent() {
                             <Link to={'/products/detail/'+p.id} className={'btn btn-secondary btn-sm'}>Detail</Link>
                         </td>
                         <td>
-                            <Button className={'btn-sm btn-danger'} variant="danger" onClick={()=>{
+                            {account&&((account.role=="ADMIN")?<Button className={'btn-sm btn-danger'} variant="danger" onClick={()=>{
                                 handleShow(p);
                             }}>
                                 Delete
-                            </Button>
+                            </Button> :'')}
+
                         </td>
                     </tr>
                 ))}

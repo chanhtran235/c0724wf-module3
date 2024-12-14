@@ -34,5 +34,19 @@
       "id": 5,
       "name": "Black Berry"
     }
+  ],
+  "accounts" : [
+    {
+      "id": 1,
+      "username": "admin",
+      "password" : "123",
+      "role": "ADMIN"
+    },
+    {
+      "id": 2,
+      "username": "chanhtv",
+      "password" : "123",
+      "role": "USER"
+    }
   ]
 }

@@ -1,7 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
-import {Link, NavLink} from "react-router-dom"
+import {Link, NavLink, useNavigate} from "react-router-dom"
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../redux/accountAction";
+
 function HeaderComponent() {
+    const account = useSelector(state => state.user.account);
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/home');
+    }
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -17,13 +27,27 @@ function HeaderComponent() {
                             <Link className="nav-link active" aria-current="page" to="/home">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <NavLink   className={({isActive})=>`nav-link ${isActive?'active-link':''}`} to="/products">List</NavLink>
+                            <NavLink className={({isActive}) => `nav-link ${isActive ? 'active-link' : ''}`}
+                                     to="/products">List</NavLink>
                         </li>
-                      </ul>
+                        <li className="nav-item">
+                            {!account &&
+                            <NavLink className={({isActive}) => `nav-link ${isActive ? 'active-link' : ''}`}
+                                     to="/login">Login</NavLink>}
+
+                        </li>
+                        <li className="nav-item">
+                            {account && <button onClick={handleLogout}>Logout</button>}
+                        </li>
+                        <li className="nav-item">
+                            {account && account.username}
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
     );
 
 }
-export default HeaderComponent ;
+
+export default HeaderComponent;
