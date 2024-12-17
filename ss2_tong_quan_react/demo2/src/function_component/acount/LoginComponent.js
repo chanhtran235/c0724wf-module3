@@ -4,6 +4,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {loginAccount} from "../../service/accountService";
 import {login} from "../../redux/action";
 import {useNavigate} from "react-router";
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function LoginComponent() {
     const accountLogin = useSelector((state)=>state.user.account);
     const navigate = useNavigate();
@@ -13,19 +17,27 @@ function LoginComponent() {
     const  handleLogin= async ()=>{
         const username = usernameRef.current.value;
         const password = passwordRef.current.value;
-        const account = {
+        const loginInfo = {
             username,
             password
         }
-        const currentAccount = await loginAccount(account);
-        if (currentAccount!=null){
-            console.log("----------login thành công ------------")
-            dispatch(login(currentAccount));
-            console.log(accountLogin)
-            navigate("/students");
+        let isSuccess =await dispatch(login(loginInfo))
+        if (isSuccess){
+            navigate("/home");
+            toast.success("Đăng nhập thành công")
         }else {
-            console.log("-------login không thành công------------")
+            toast.error("Đăng nhập thất bại")
         }
+
+        // const currentAccount = await loginAccount(account);
+        // if (currentAccount!=null){
+        //     console.log("----------login thành công ------------")
+        //     dispatch(login(currentAccount));
+        //     console.log(accountLogin)
+        //     navigate("/students");
+        // }else {
+        //     console.log("-------login không thành công------------")
+        // }
     }
 
     return (

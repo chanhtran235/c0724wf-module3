@@ -2,10 +2,10 @@ import React, {useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../redux/accountAction";
 import {useNavigate} from "react-router-dom";
-import {checkLogin} from "../services/accounServcie";
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function LoginComponent() {
 
-    const account = useSelector(state =>state.user.account )
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
@@ -19,10 +19,14 @@ function LoginComponent() {
             password: password
         }
         console.log(loginInfo);
-        // call API để checkLogin => kiểm trả có trong dB => OK
-         const account = await checkLogin(loginInfo);
-         dispatch(login(account));
-         navigate("/products")
+         let isLoginSuccess = await dispatch(login(loginInfo));
+         if (isLoginSuccess){
+             toast.success("Đăng nhập thành công");
+             navigate("/products")
+         }else {
+             toast.error("Đăng nhập thất bại");
+         }
+
     }
     return (
         <form>

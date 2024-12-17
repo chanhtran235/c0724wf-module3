@@ -4,7 +4,7 @@ import axios from "axios";
 export async  function getAllProduct() {
 
     try {
-        const  response = await axios.get("http://localhost:8080/products");
+        const  response = await axios.get("http://localhost:8080/products?_sort=name&_order=asc");
         console.log(response);
         return response.data;
 
@@ -14,10 +14,10 @@ export async  function getAllProduct() {
     }
 }
 
-export async  function searchProductByName(searchName) {
+export async  function searchProductByName(searchName,manufactureId) {
 
     try {
-        const  response = await axios.get(`http://localhost:8080/products?name_like=${searchName}`);
+        const  response = await axios.get(`http://localhost:8080/products?name_like=${searchName}&_sort=name&_order=asc`);
         console.log("-------search--------")
         console.log(response.data);
         return response.data;

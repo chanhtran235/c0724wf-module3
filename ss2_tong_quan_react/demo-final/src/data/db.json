@@ -11,6 +11,32 @@
         "Bluetooth"
       ],
       "id": 1
+    },
+    {
+      "name": "Samsung",
+      "manufacture": {
+        "id": 1,
+        "name": "Sam sung"
+      },
+      "sim": "2",
+      "feature": [
+        "Bluetooth",
+        "5G"
+      ],
+      "id": 2
+    },
+    {
+      "name": "Anhchanh",
+      "manufacture": {
+        "id": 5,
+        "name": "Black Berry"
+      },
+      "sim": "2",
+      "feature": [
+        "Bluetooth",
+        "5G"
+      ],
+      "id": 3
     }
   ],
   "manufactures": [
@@ -35,17 +61,17 @@
       "name": "Black Berry"
     }
   ],
-  "accounts" : [
+  "accounts": [
     {
       "id": 1,
       "username": "admin",
-      "password" : "123",
+      "password": "123",
       "role": "ADMIN"
     },
     {
       "id": 2,
       "username": "chanhtv",
-      "password" : "123",
+      "password": "123",
       "role": "USER"
     }
   ]
