@@ -41,3 +41,19 @@
   color: red !important;
   font-weight: bold !important;
 }
+
+.page-item {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  color: #000;
+  border-radius: 5px;
+}
+
+.page-item.active {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+}

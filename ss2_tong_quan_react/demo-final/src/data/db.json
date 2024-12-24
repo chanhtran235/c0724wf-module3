@@ -26,7 +26,19 @@
       "id": 2
     },
     {
-      "name": "Anhchanh",
+      "name": "Chanhtran",
+      "manufacture": {
+        "id": 2,
+        "name": "Nokia"
+      },
+      "sim": "1",
+      "feature": [
+        "Camera"
+      ],
+      "id": 3
+    },
+    {
+      "name": "Blackbery",
       "manufacture": {
         "id": 5,
         "name": "Black Berry"
@@ -34,9 +46,36 @@
       "sim": "2",
       "feature": [
         "Bluetooth",
-        "5G"
+        "5G",
+        "Camera"
       ],
-      "id": 3
+      "id": 4
+    },
+    {
+      "name": "Iphone",
+      "manufacture": {
+        "id": 3,
+        "name": "Iphone"
+      },
+      "sim": "1",
+      "feature": [
+        "Bluetooth",
+        "5G",
+        "Camera"
+      ],
+      "id": 5
+    },
+    {
+      "name": "Ebccc",
+      "manufacture": {
+        "id": 3,
+        "name": "Iphone"
+      },
+      "sim": "1",
+      "feature": [
+        "Bluetooth"
+      ],
+      "id": 6
     }
   ],
   "manufactures": [

@@ -37,10 +37,10 @@ function HeaderComponent() {
 
                         </li>
                         <li className="nav-item">
-                            {account && <button onClick={handleLogout}>Logout</button>}
+                            {account && <NavLink className="nav-link active" onClick={handleLogout}>Logout</NavLink>}
                         </li>
                         <li className="nav-item">
-                            {account && account.username}
+                           <span className="nav-link active">{account && account.username}</span>
                         </li>
                     </ul>
                 </div>
