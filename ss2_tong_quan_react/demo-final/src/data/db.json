@@ -76,6 +76,32 @@
         "Bluetooth"
       ],
       "id": 6
+    },
+    {
+      "name": "Bphone S12",
+      "manufacture": {
+        "id": 4,
+        "name": "Bphone"
+      },
+      "sim": "2",
+      "feature": [
+        "Bluetooth",
+        "5G"
+      ],
+      "id": 7
+    },
+    {
+      "name": "Bphone Abc",
+      "manufacture": {
+        "id": 4,
+        "name": "Bphone"
+      },
+      "sim": "1",
+      "feature": [
+        "Bluetooth",
+        "5G"
+      ],
+      "id": 8
     }
   ],
   "manufactures": [

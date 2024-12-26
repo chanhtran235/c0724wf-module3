@@ -5,12 +5,14 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import {useSelector} from "react-redux";
 import {getAllManufacture} from "../services/manufactureService";
+import PaginationComponent from "./PaginationComponent";
 function ListComponent() {
     const account = useSelector(state =>state.user.account );
     const [productList , setProductList] = useState([]);
     const [manufactureList , setManufactureList] = useState([]);
     const [show,setShow] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
+    const [isSearch,setIsSearch] = useState(false);
     const [deleteProduct,setDeleteProduct] = useState({id: "", name: ""});
     const searchRef = useRef();
     const searchManufactureIdRef = useRef();
@@ -21,7 +23,9 @@ function ListComponent() {
     useEffect( ()=>{
         console.log("------- userEffec run ----------------------")
         const fetchData = async ()=>{
-            const {data, totatRecord} =  await getAllProduct(page,size);
+            let name = searchRef.current.value;
+            let manufactureId = searchManufactureIdRef.current.value;
+            const {data, totatRecord} =  await searchProductByName(name,manufactureId,page,size);
             setProductList(data);
             setTotalPage(()=>Math.ceil(totatRecord/size))
 
@@ -33,7 +37,7 @@ function ListComponent() {
         fetchData();
         fetchDataManufac();
 
-    },[isLoading, page]);
+    },[isLoading,page, isSearch]);
 
     const handleClose =()=>{
         setShow((pre) => !pre);
@@ -50,26 +54,21 @@ function ListComponent() {
         handleClose();
     }
     const handleSearch =()=>{
-        let name = searchRef.current.value;
-        let manufactureId = searchManufactureIdRef.current.value;
-        const fetchData = async ()=>{
-            const searchList = await searchProductByName(name,manufactureId);
-            setProductList(searchList);
-        }
-        fetchData();
-    }
-    const handleNext =()=> {
-        if (page<totalPage){
-            setPage(pre => pre+1)
-        }
-    }
-    const handlePre =()=>{
-        if (page>1){
-            setPage(pre => pre-1)
-        }
-
+        setIsSearch(pre => !pre);
+        setPage(1);
     }
 
+    // const handleNext =()=> {
+    //     if (page<totalPage){
+    //         setPage(pre => pre+1)
+    //     }
+    // }
+    // const handlePre =()=>{
+    //     if (page>1){
+    //         setPage(pre => pre-1)
+    //     }
+    //
+    // }
 
     return (
         <>
@@ -127,21 +126,23 @@ function ListComponent() {
                         </td>
                     </tr>
                 ))}
-                <tr>
-                    <td colSpan={8}>
+                <tr className="bg-light">
+                    <td colSpan={9}>
                         {(productList.length==0)?'Danh sách trống':''}
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <div>
-                <button className="btn btn-sm btn-secondary" onClick={handlePre}>Pre</button>
-                {[...new Array(totalPage)].map((e,i)=>
-                    (<button className={`page-item ${page === i + 1 ? 'active' : ''}`} onClick={()=>{setPage(i+1)}} key={i}>{i+1}</button>)
-                )}
-                <button className="btn btn-sm btn-secondary" onClick={handleNext}>Pre</button>
-            </div>
+            {/*<div>*/}
+            {/*    <button className="btn btn-sm btn-secondary" onClick={handlePre}>Pre</button>*/}
+            {/*    {[...new Array(totalPage)].map((e,i)=>*/}
+            {/*        (<button className={`btn btn-sm page-item ${page === i + 1 ? 'active' : ''}`} onClick={()=>{setPage(i+1)}} key={i}>{i+1}</button>)*/}
+            {/*    )}*/}
+            {/*    <button className="btn btn-sm btn-secondary" onClick={handleNext}>Pre</button>*/}
+            {/*</div>*/}
+
+            <PaginationComponent page={page} setPage={setPage} totalPage={totalPage}/>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

@@ -1,5 +1,7 @@
-import logo from './logo.svg';
+
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 import './App.css';
 import HeaderComponent from "./components/HeaderComponent";
 import ListComponent from "./components/ListComponent";

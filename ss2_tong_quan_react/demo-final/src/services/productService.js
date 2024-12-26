@@ -20,17 +20,21 @@ export async  function getAllProduct(page,size) {
     }
 }
 
-export async  function searchProductByName(searchName,manufactureId) {
+export async  function searchProductByName(searchName,manufactureId,page,size) {
 
-    let url1 =`${url}?name_like=${searchName}&manufacture.id=${manufactureId}&_sort=name&_order=asc`
+    let url1 =`${url}?name_like=${searchName}&manufacture.id=${manufactureId}&_sort=name&_order=asc&_page=${page}&_limit=${size}`
     if (manufactureId==""){
-        url1 =`${url}?name_like=${searchName}&_sort=name&_order=asc`
+        url1 =`${url}?name_like=${searchName}&_sort=name&_order=asc&_page=${page}&_limit=${size}`
     }
     try {
         const  response = await axios.get(url1);
-        console.log("-------search--------")
-        console.log(response.data);
-        return response.data;
+        const data = response.data;
+        const totatRecord = response.headers['x-total-count'];
+
+        return {
+            data: data,
+            totatRecord: totatRecord
+        };
     }catch (e) {
         console.log("lỗi "+e);
         return [];
